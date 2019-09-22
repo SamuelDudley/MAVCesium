@@ -17,6 +17,12 @@ var entity_shadows = {value: false}
   if (bing_api_key) {
 	  Cesium.BingMapsApi.defaultKey = bing_api_key;
   }
+    // The terrain provider needs this....
+    // this is a 'free' cesium-ion access token created by davidbuzz@gmail.com and approved for non-commercial/community purposes by cesium.
+    // The MAVCesium project itself is non-commercial, so using this key here is the right thing to do, but if you fork MAVCesium and use it 
+    // in anything commercial, please get your own cesium-ion token here: https://cesium.com/cesium-ion/
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzYjljZTAyZS1lMzk5LTRkYmUtYWVkZi1jY2ZjYTk3MWMwNWQiLCJpZCI6MTU4OTksInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NjkwNzA2OTV9.8ODZRPuMzD3rOT6IDHsKJNNT1w2Srtp4mMz3hYR6wUk';
+
 	// Construct the viewer, with a high-res terrain source pre-selected.
 	var viewer = new Cesium.Viewer('cesium_container', {
 		animation: false, // <-- this is the time control
@@ -34,11 +40,10 @@ var entity_shadows = {value: false}
 	    clock : clock,
 	    infoBox : false, //Disable InfoBox widget
 	    selectionIndicator : false, //Disable selection indicator
-	    terrainProvider : new Cesium.CesiumTerrainProvider({
-			url : '//assets.agi.com/stk-terrain/world',
-			requestVertexNormals: true
-		}),
+        terrainProvider: Cesium.createWorldTerrain()
 	});
+
+
 	var scene = viewer.scene; //add a scene to the viewer
 	var canvas = viewer.canvas; //add a canvas to the viewer
 	scene.skyAtmosphere = new Cesium.SkyAtmosphere();
